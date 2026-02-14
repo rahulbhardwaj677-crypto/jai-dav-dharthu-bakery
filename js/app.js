@@ -1082,3 +1082,128 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// ===== 🔥 FIREBASE PHONE AUTH =====
+let confirmationResult = null;
+let recaptchaVerifier = null;
+
+function setupRecaptcha() {
+    if (!recaptchaVerifier) {
+        recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            'size': 'invisible',
+            'callback': (response) => {
+                // reCAPTCHA solved - will auto-proceed
+            }
+        });
+    }
+}
+
+function sendOTP() {
+    const phoneNumber = document.getElementById('phoneNumberInput').value;
+    if (phoneNumber.length !== 10) {
+        showToast('Please enter a valid 10-digit number 📱');
+        return;
+    }
+
+    const fullPhoneNumber = '+91' + phoneNumber;
+    document.getElementById('otpSpinner').classList.remove('hidden');
+    document.getElementById('sendOtpBtn').disabled = true;
+
+    setupRecaptcha();
+
+    const appVerifier = recaptchaVerifier;
+    firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
+        .then((result) => {
+            confirmationResult = result;
+            document.getElementById('otpSpinner').classList.add('hidden');
+            document.getElementById('sendOtpBtn').disabled = false;
+            document.getElementById('sentPhoneDisplay').textContent = fullPhoneNumber;
+            goToPayStep(2); // Go to OTP screen
+            showToast('OTP sent successfully! 📩');
+
+            // Focus first OTP digit
+            setTimeout(() => document.querySelector('.otp-digit').focus(), 500);
+        }).catch((error) => {
+            document.getElementById('otpSpinner').classList.add('hidden');
+            document.getElementById('sendOtpBtn').disabled = false;
+            console.error("SMS Error:", error);
+            if (error.code === 'auth/operation-not-allowed') {
+                showToast('⚠️ Phone Auth not enabled in Firebase Console!');
+            } else {
+                showToast('Error sending OTP. Try again.');
+            }
+            if (recaptchaVerifier) {
+                recaptchaVerifier.clear();
+                recaptchaVerifier = null;
+            }
+        });
+}
+
+function verifyOTP() {
+    const otpInputs = document.querySelectorAll('.otp-digit');
+    let otp = '';
+    otpInputs.forEach(input => otp += input.value);
+
+    if (otp.length !== 6) {
+        showToast('Please enter 6-digit OTP');
+        return;
+    }
+
+    document.getElementById('verifySpinner').classList.remove('hidden');
+    document.getElementById('verifyOtpBtn').disabled = true;
+
+    confirmationResult.confirm(otp).then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        document.getElementById('verifySpinner').classList.add('hidden');
+        showToast('Phone verified! ✅');
+        goToPayStep(3); // Go to Payment Method
+    }).catch((error) => {
+        document.getElementById('verifySpinner').classList.add('hidden');
+        document.getElementById('verifyOtpBtn').disabled = false;
+        showToast('Invalid OTP. Please try again ❌');
+        console.error(error);
+    });
+}
+
+function initOtpInputs() {
+    const inputs = document.querySelectorAll('.otp-digit');
+    inputs.forEach((input, i) => {
+        input.addEventListener('input', (e) => {
+            const val = e.target.value.replace(/\D/g, '');
+            e.target.value = val;
+            if (val && i < 5) inputs[i + 1].focus();
+            checkOtpComplete();
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value && i > 0) {
+                inputs[i - 1].focus();
+            }
+        });
+
+        // Allow paste
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+            pasted.split('').forEach((char, idx) => {
+                if (inputs[idx]) {
+                    inputs[idx].value = char;
+                }
+            });
+            checkOtpComplete();
+            if (pasted.length > 0) inputs[Math.min(pasted.length, 5)].focus();
+        });
+    });
+}
+
+function checkOtpComplete() {
+    const inputs = document.querySelectorAll('.otp-digit');
+    const allFilled = [...inputs].every(i => i.value.length === 1);
+    document.getElementById('verifyOtpBtn').disabled = !allFilled;
+}
+
+// Init OTP listeners on load
+document.addEventListener('DOMContentLoaded', () => {
+    initOtpInputs();
+});
