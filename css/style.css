@@ -2829,7 +2829,37 @@ ul {
     font-weight: 600;
 }
 
+
 .contact-link:hover {
     color: var(--primary);
     text-decoration: underline;
+}
+
+/* Call Floating Button */
+.call-float {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background: #0984e3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(9, 132, 227, 0.4);
+    z-index: 2005;
+    /* Higher than cart sidebar (2001) but lower than modal (3001) */
+    transition: all var(--transition-fast);
+}
+
+.call-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(9, 132, 227, 0.5);
+}
+
+.call-float svg {
+    width: 28px;
+    height: 28px;
+    fill: #fff;
 }
