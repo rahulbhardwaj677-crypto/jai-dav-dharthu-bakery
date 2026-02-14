@@ -36,7 +36,7 @@ window.sendOTP = function () {
     const fullPhoneNumber = '+91' + phoneNumber;
 
     // UI Loading
-    const btn = document.getElementById('authActionBtn'); // Updated ID
+    const btn = document.getElementById('authActionBtn');
     const spinner = document.getElementById('authSpinner');
     if (btn) btn.disabled = true;
     if (spinner) spinner.classList.remove('hidden');
@@ -100,7 +100,7 @@ window.verifyOTP = function () {
 
     if (!authConfirmationResult) {
         showToast('Session expired. Please retry.');
-        window.location.reload(); // Simple error recovery
+        window.location.reload();
         return;
     }
 
@@ -120,7 +120,7 @@ window.verifyOTP = function () {
 window.checkOtpComplete = function () {
     const inputs = document.querySelectorAll('.otp-digit');
     const allFilled = [...inputs].every(i => i.value.length === 1);
-    const btn = document.getElementById('authActionBtn'); // Updated ID
+    const btn = document.getElementById('authActionBtn');
     if (btn) btn.disabled = !allFilled;
 };
 
@@ -149,3 +149,51 @@ window.selectPaymentMethod = function (method) {
     const btn = document.getElementById('proceedToVerify');
     if (btn) btn.disabled = false;
 };
+
+// ===== 🛒 CART PERSISTENCE =====
+
+function saveCartToStorage() {
+    if (typeof cart !== 'undefined') {
+        localStorage.setItem('bakery-cart', JSON.stringify(cart));
+    }
+}
+
+function loadCartFromStorage() {
+    const saved = localStorage.getItem('bakery-cart');
+    if (saved && typeof cart !== 'undefined') {
+        try {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed)) {
+                // Update global cart array in place
+                cart.length = 0;
+                parsed.forEach(p => cart.push(p));
+
+                // Update UI
+                if (typeof updateCartUI === 'function') updateCartUI();
+                if (typeof updateCartTotal === 'function') updateCartTotal();
+                if (typeof updateCartCounter === 'function') updateCartCounter();
+            }
+        } catch (e) { console.error('Cart load error', e); }
+    }
+}
+
+// Hook into addToCart
+if (typeof addToCart === 'function') {
+    const originalAddToCart = addToCart;
+    window.addToCart = function (id, name, price, img) {
+        originalAddToCart(id, name, price, img);
+        saveCartToStorage();
+    };
+}
+
+// Hook into updateQty
+if (typeof updateQty === 'function') {
+    const originalUpdateQty = updateQty;
+    window.updateQty = function (id, change) {
+        originalUpdateQty(id, change);
+        saveCartToStorage();
+    };
+}
+
+// Load cart on startup
+loadCartFromStorage();
