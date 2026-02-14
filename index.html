@@ -485,8 +485,8 @@
       </div>
     </div>
 
-    <!-- Step 2: Choose Payment Method -->
-    <div class="payment-step hidden" id="payStep2">
+    <!-- STEP 2: Choose Payment Method -->
+    <div id="payStep2" class="payment-step hidden">
       <div class="payment-header">
         <button class="payment-back" onclick="goToPayStep(1)">← Back</button>
         <h3>💳 Payment Method</h3>
@@ -498,284 +498,217 @@
           <!-- Google Pay -->
           <div class="payment-method-card" data-method="gpay" onclick="selectPaymentMethod('gpay')">
             <div class="pm-logo-wrap gpay-bg">
-              <svg viewBox="0 0 24 24" width="32" height="32">
-                <path
-                  d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"
-                  fill="#4285F4" />
-              </svg>
+              <span class="pm-icon">🔵</span>
               <span class="pm-name">Google Pay</span>
             </div>
-            <div class="pm-check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <div class="payment-body">
-
-                  <!-- STEP 1: Phone Number -->
-                  <div id="payStep1" class="payment-step">
-                    <div class="payment-choose-label">To proceed, please verify your mobile number</div>
-
-                    <div class="phone-input-group">
-                      <span class="country-code">🇮🇳 +91</span>
-                      <input type="tel" id="phoneNumberInput" placeholder="Enter mobile number" maxlength="10"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                    </div>
-                    <div id="recaptcha-container"></div>
-
-                    <div class="payment-footer">
-                      <button class="checkout-btn" id="sendOtpBtn" onclick="sendOTP()">
-                        <span class="pay-btn-text">Get OTP</span>
-                        <span class="pay-btn-spinner hidden" id="otpSpinner">
-                          <span class="spin-animation">↻</span>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- STEP 2: Verify OTP -->
-                  <div id="payStep2" class="payment-step hidden">
-                    <div class="payment-choose-label">Enter the 6-digit code sent to <span id="sentPhoneDisplay"></span>
-                    </div>
-
-                    <div class="pin-input-container otp-container">
-                      <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="0">
-                      <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="1">
-                      <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="2">
-                      <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="3">
-                      <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="4">
-                      <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="5">
-                    </div>
-
-                    <div class="payment-footer">
-                      <button class="checkout-btn" id="verifyOtpBtn" onclick="verifyOTP()" disabled>
-                        <span class="pay-btn-text">Verify & Proceed</span>
-                        <span class="pay-btn-spinner hidden" id="verifySpinner">
-                          <span class="spin-animation">↻</span>
-                        </span>
-                      </button>
-                      <button class="text-btn" onclick="goToPayStep(1)" style="margin-top:10px; width:100%">Change
-                        Number</button>
-                    </div>
-                  </div>
-
-                  <!-- STEP 3: Payment Method (Old Step 1) -->
-                  <div id="payStep3" class="payment-step hidden">
-                    <!-- Order Summary -->
-                    <div class="order-summary-totals">
-                      <div class="summary-row">
-                        <span>Subtotal</span>
-                        <span id="summarySubtotal">₹0</span>
-                      </div>
-                      <div class="summary-row">
-                        <span>GST (5%)</span>
-                        <span id="summaryGst">₹0</span>
-                      </div>
-                      <div class="summary-row total-row">
-                        <span>Total to Pay</span>
-                        <span id="summaryTotal">₹0</span>
-                      </div>
-                    </div>
-
-                    <div class="payment-choose-label">Select Payment Method</div>
-
-                    <div class="payment-methods-grid">
-                      <div class="payment-method-card gpay-bg" onclick="selectPaymentMethod('gpay')" data-method="gpay">
-                        <div class="pm-logo-wrap">
-                          <svg viewBox="0 0 24 24" width="32" height="32">
-                            <path fill="#4285F4"
-                              d="M23.41 10.38H12v4.88h6.54c-.65 3.01-3.23 4.96-6.54 4.96-3.9 0-7.06-3.16-7.06-7.06s3.16-7.06 7.06-7.06c1.69 0 3.25.59 4.47 1.66l3.52-3.52C17.78 2.05 15.06 1 12 1 5.93 1 1 5.93 1 12s4.93 11 11 11c5.84 0 10.68-4.14 11.83-9.59.18-.87.28-1.78.28-2.7 0-.39-.03-.78-.1-1.16v-.17z" />
-                          </svg>
-                          <div class="pm-name">Google Pay</div>
-                        </div>
-                        <div class="pm-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="#fff">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                          </svg></div>
-                      </div>
-
-                      <div class="payment-method-card paytm-bg" onclick="selectPaymentMethod('paytm')"
-                        data-method="paytm">
-                        <div class="pm-logo-wrap">
-                          <svg viewBox="0 0 24 24" width="32" height="32">
-                            <path fill="#00BAF2" d="M2 10.5h4v9H2z" />
-                            <path fill="#002E6E" d="M20 10.5h-2.5c-1.1 0-2 .9-2 2v1.5h2v-1h.5v4H20v-6.5z" />
-                          </svg>
-                          <div class="pm-name">Paytm</div>
-                        </div>
-                        <div class="pm-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="#fff">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                          </svg></div>
-                      </div>
-
-                      <div class="payment-method-card phonepe-bg" onclick="selectPaymentMethod('phonepe')"
-                        data-method="phonepe">
-                        <div class="pm-logo-wrap">
-                          <svg viewBox="0 0 24 24" width="32" height="32">
-                            <circle fill="#5F259F" cx="12" cy="12" r="11" />
-                            <path fill="#fff" d="M14 7h-2v10h2V7z" />
-                          </svg>
-                          <div class="pm-name">PhonePe</div>
-                        </div>
-                        <div class="pm-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="#fff">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                          </svg></div>
-                      </div>
-
-                      <div class="payment-method-card bhim-bg" onclick="selectPaymentMethod('bhim')" data-method="bhim">
-                        <div class="pm-logo-wrap">
-                          <svg viewBox="0 0 24 24" width="32" height="32">
-                            <path fill="#00897B" d="M4 6h16v12H4z" />
-                            <path fill="#fff" d="M7 9h10v6H7z" />
-                          </svg>
-                          <div class="pm-name">BHIM UPI</div>
-                        </div>
-                        <div class="pm-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="#fff">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                          </svg></div>
-                      </div>
-                    </div>
-
-                    <div class="secure-payment-badge">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path
-                          d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
-                      </svg>
-                      100% Secure Payments
-                    </div>
-
-                    <div class="payment-footer">
-                      <button class="checkout-btn" id="proceedToPin" onclick="goToPayStep(4)" disabled>Proceed</button>
-                    </div>
-                  </div>
-
-                  <!-- STEP 4: Real Payment (Replaces PIN) -->
-                  <div id="payStep4" class="payment-step hidden">
-                    <div class="pin-body">
-                      <div class="selected-method-display" id="selectedMethodDisplay">
-                        <!-- populated dynamically -->
-                      </div>
-
-                      <div class="pin-amount-display">
-                        <span class="pin-amount-label">Total Payable</span>
-                        <div class="pin-amount-value" id="pinAmount">₹0</div>
-                      </div>
-
-                      <!-- Desktop / Generic View: QR Code -->
-                      <div id="paymentQrSection" style="margin-bottom: 20px;">
-                        <p class="pin-instruction">Scan to Pay securely</p>
-                        <img id="paymentQrCode" src="" alt="Payment QR"
-                          style="width: 200px; height: 200px; border-radius: 12px; border: 1px solid #eee; padding: 10px;">
-                      </div>
-
-                      <!-- Mobile View: Deep Link Button -->
-                      <div id="paymentAppSection" class="hidden" style="margin-bottom: 20px;">
-                        <p class="pin-instruction">Complete payment in app</p>
-                      </div>
-
-                      <div class="pin-security-note">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                          <path
-                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
-                        </svg>
-                        Secure UPI Transaction by NCPI
-                      </div>
-                    </div>
-
-                    <div class="payment-footer">
-                      <button class="checkout-btn" id="payNowBtn" onclick="initiateRealPayment()">
-                        <span class="pay-btn-text">PAY NOW</span>
-                        <span class="pay-btn-spinner hidden" id="paySpinner">
-                          <span class="spin-animation">↻</span>
-                        </span>
-                      </button>
-                      <button class="text-btn" onclick="confirmManualPayment()"
-                        style="margin-top:10px; font-size:12px; opacity:0.8">I have completed payment</button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- STEP 5: Success (Old Step 4) -->
-                <div id="payStep5" class="payment-step hidden">
-                  <div class="success-body">
-                    <div class="success-animation">
-                      <div class="success-circle">
-                        <svg viewBox="0 0 24 24" width="48" height="48" fill="#fff">
-                          <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    <div class="success-title">Payment Successful!</div>
-                    <div class="success-amount" id="successAmount">₹0</div>
-
-                    <div class="success-details">
-                      <div class="success-detail-row">
-                        <span>Transaction ID</span>
-                        <span id="txnId">...</span>
-                      </div>
-                      <div class="success-detail-row">
-                        <span>Date & Time</span>
-                        <span id="txnDate">...</span>
-                      </div>
-                      <div class="success-detail-row">
-                        <span>Payment Method</span>
-                        <span id="txnMethod">...</span>
-                      </div>
-                      <div class="success-detail-row">
-                        <span>Status</span>
-                        <span class="txn-status-badge">Completed</span>
-                      </div>
-                    </div>
-
-                    <div class="success-message">
-                      <span>🎉</span>
-                      <div>
-                        <strong>Order Placed!</strong>
-                        <div style="font-size:12px; opacity:0.8">Your delicious items will be ready soon.</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="payment-footer">
-                    <button class="checkout-btn" onclick="closePaymentAndReset()">Done</button>
-                  </div>
-                </div>
-
-            </div>
+            <div class="pm-check">✔</div>
           </div>
+          <!-- Paytm -->
+          <div class="payment-method-card" data-method="paytm" onclick="selectPaymentMethod('paytm')">
+            <div class="pm-logo-wrap paytm-bg">
+              <span class="pm-icon">💠</span>
+              <span class="pm-name">Paytm</span>
+            </div>
+            <div class="pm-check">✔</div>
+          </div>
+          <!-- PhonePe -->
+          <div class="payment-method-card" data-method="phonepe" onclick="selectPaymentMethod('phonepe')">
+            <div class="pm-logo-wrap phonepe-bg">
+              <span class="pm-icon">🟣</span>
+              <span class="pm-name">PhonePe</span>
+            </div>
+            <div class="pm-check">✔</div>
+          </div>
+          <!-- BHIM -->
+          <div class="payment-method-card" data-method="bhim" onclick="selectPaymentMethod('bhim')">
+            <div class="pm-logo-wrap bhim-bg">
+              <span class="pm-icon">🟢</span>
+              <span class="pm-name">BHIM UPI</span>
+            </div>
+            <div class="pm-check">✔</div>
+          </div>
+        </div>
 
-          <!-- Firebase SDKs (using CDN for cross-platform support) -->
-          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-          <!-- Added Auth -->
-          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+        <div class="secure-payment-badge">
+          🔒 100% Secure Payments via NCPI
+        </div>
+      </div>
+      <div class="payment-footer">
+        <button class="checkout-btn" id="proceedToVerify" onclick="goToPayStep(3)" disabled>Proceed to Verify →</button>
+      </div>
+    </div>
 
-          <script>
-            // Firebase Configuration
-            const firebaseConfig = {
-              apiKey: "AIzaSyDqq698rpuiQQCjrEAWp6rNSz0lhHkXjns",
-              authDomain: "jai-dav-dharthu-bakery.firebaseapp.com",
-              projectId: "jai-dav-dharthu-bakery",
-              storageBucket: "jai-dav-dharthu-bakery.firebasestorage.app",
-              messagingSenderId: "178566201855",
-              appId: "1:178566201855:web:288aaaa93cabae98b4e7ca"
-            };
+    <!-- STEP 3: Verification (Phone + OTP) -->
+    <div id="payStep3" class="payment-step hidden">
+      <div class="payment-header">
+        <button class="payment-back" onclick="goToPayStep(2)">← Back</button>
+        <h3>🔐 Verification</h3>
+        <button class="payment-close" onclick="closePayment()">&times;</button>
+      </div>
+      <div class="payment-body">
+        <div id="authPhoneSection">
+          <div class="payment-choose-label">Verify mobile to secure payment</div>
+          <div class="phone-input-group">
+            <span class="country-code">🇮🇳 +91</span>
+            <input type="tel" id="phoneNumberInput" placeholder="Enter mobile number" maxlength="10"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          </div>
+          <div id="recaptcha-container"></div>
+        </div>
 
-            // Initialize Firebase
-            try {
-              firebase.initializeApp(firebaseConfig);
-              const auth = firebase.auth(); // Init Auth
-              const analytics = firebase.analytics();
-              const db = firebase.firestore();
+        <div id="authOtpSection" class="hidden">
+          <div class="payment-choose-label">Enter OTP sent to <span id="sentPhoneDisplay"
+              style="font-weight:bold"></span></div>
+          <div class="pin-input-container otp-container">
+            <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="0">
+            <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="1">
+            <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="2">
+            <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="3">
+            <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="4">
+            <input type="tel" class="pin-digit otp-digit" maxlength="1" data-index="5">
+          </div>
+        </div>
+      </div>
+      <div class="payment-footer">
+        <button class="checkout-btn" id="authActionBtn" onclick="handleAuthAction()">
+          <span class="pay-btn-text">Get OTP</span>
+          <span class="pay-btn-spinner hidden" id="authSpinner">↻</span>
+        </button>
+      </div>
+    </div>
 
-              // Use device language for auth (SMS)
-              auth.useDeviceLanguage();
+    <!-- STEP 4: Real Payment (Replaces PIN) -->
+    <div id="payStep4" class="payment-step hidden">
+      <div class="pin-body">
+        <div class="selected-method-display" id="selectedMethodDisplay">
+          <!-- populated dynamically -->
+        </div>
 
-              console.log('Firebase initialized successfully! 🔥');
-            } catch (e) {
-              console.error('Firebase initialization error:', e);
-            }
-          </script>
+        <div class="pin-amount-display">
+          <span class="pin-amount-label">Total Payable</span>
+          <div class="pin-amount-value" id="pinAmount">₹0</div>
+        </div>
 
-          <script src="js/app.js"></script>
+        <!-- Desktop / Generic View: QR Code -->
+        <div id="paymentQrSection" style="margin-bottom: 20px;">
+          <p class="pin-instruction">Scan to Pay securely</p>
+          <img id="paymentQrCode" src="" alt="Payment QR"
+            style="width: 200px; height: 200px; border-radius: 12px; border: 1px solid #eee; padding: 10px;">
+        </div>
+
+        <!-- Mobile View: Deep Link Button -->
+        <div id="paymentAppSection" class="hidden" style="margin-bottom: 20px;">
+          <p class="pin-instruction">Complete payment in app</p>
+        </div>
+
+        <div class="pin-security-note">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path
+              d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+          </svg>
+          Secure UPI Transaction by NCPI
+        </div>
+      </div>
+
+      <div class="payment-footer">
+        <button class="checkout-btn" id="payNowBtn" onclick="initiateRealPayment()">
+          <span class="pay-btn-text">PAY NOW</span>
+          <span class="pay-btn-spinner hidden" id="paySpinner">
+            <span class="spin-animation">↻</span>
+          </span>
+        </button>
+        <button class="text-btn" onclick="confirmManualPayment()" style="margin-top:10px; font-size:12px; opacity:0.8">I
+          have completed payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Success (Old Step 4) -->
+  <div id="payStep5" class="payment-step hidden">
+    <div class="success-body">
+      <div class="success-animation">
+        <div class="success-circle">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="#fff">
+            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="success-title">Payment Successful!</div>
+      <div class="success-amount" id="successAmount">₹0</div>
+
+      <div class="success-details">
+        <div class="success-detail-row">
+          <span>Transaction ID</span>
+          <span id="txnId">...</span>
+        </div>
+        <div class="success-detail-row">
+          <span>Date & Time</span>
+          <span id="txnDate">...</span>
+        </div>
+        <div class="success-detail-row">
+          <span>Payment Method</span>
+          <span id="txnMethod">...</span>
+        </div>
+        <div class="success-detail-row">
+          <span>Status</span>
+          <span class="txn-status-badge">Completed</span>
+        </div>
+      </div>
+
+      <div class="success-message">
+        <span>🎉</span>
+        <div>
+          <strong>Order Placed!</strong>
+          <div style="font-size:12px; opacity:0.8">Your delicious items will be ready soon.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-footer">
+      <button class="checkout-btn" onclick="closePaymentAndReset()">Done</button>
+    </div>
+  </div>
+
+  </div>
+  </div>
+
+  <!-- Firebase SDKs (using CDN for cross-platform support) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <!-- Added Auth -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqq698rpuiQQCjrEAWp6rNSz0lhHkXjns",
+      authDomain: "jai-dav-dharthu-bakery.firebaseapp.com",
+      projectId: "jai-dav-dharthu-bakery",
+      storageBucket: "jai-dav-dharthu-bakery.firebasestorage.app",
+      messagingSenderId: "178566201855",
+      appId: "1:178566201855:web:288aaaa93cabae98b4e7ca"
+    };
+
+    // Initialize Firebase
+    try {
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth(); // Init Auth
+      const analytics = firebase.analytics();
+      const db = firebase.firestore();
+
+      // Use device language for auth (SMS)
+      auth.useDeviceLanguage();
+
+      console.log('Firebase initialized successfully! 🔥');
+    } catch (e) {
+      console.error('Firebase initialization error:', e);
+    }
+  </script>
+
+  <script src="js/app.js"></script>
+  <script src="js/auth_v2.js"></script>
 </body>
 
 </html>
