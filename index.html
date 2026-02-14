@@ -645,7 +645,7 @@
                     </div>
                   </div>
 
-                  <!-- STEP 4: PIN (Old Step 3) -->
+                  <!-- STEP 4: Real Payment (Replaces PIN) -->
                   <div id="payStep4" class="payment-step hidden">
                     <div class="pin-body">
                       <div class="selected-method-display" id="selectedMethodDisplay">
@@ -653,123 +653,129 @@
                       </div>
 
                       <div class="pin-amount-display">
-                        <span class="pin-amount-label">Paying Amount</span>
+                        <span class="pin-amount-label">Total Payable</span>
                         <div class="pin-amount-value" id="pinAmount">₹0</div>
                       </div>
 
-                      <p class="pin-instruction">Enter your 4-digit UPI PIN to authorize</p>
+                      <!-- Desktop / Generic View: QR Code -->
+                      <div id="paymentQrSection" style="margin-bottom: 20px;">
+                        <p class="pin-instruction">Scan to Pay securely</p>
+                        <img id="paymentQrCode" src="" alt="Payment QR"
+                          style="width: 200px; height: 200px; border-radius: 12px; border: 1px solid #eee; padding: 10px;">
+                      </div>
 
-                      <div class="pin-input-container">
-                        <input type="tel" class="pin-digit" maxlength="1" data-index="0">
-                        <input type="tel" class="pin-digit" maxlength="1" data-index="1">
-                        <input type="tel" class="pin-digit" maxlength="1" data-index="2">
-                        <input type="tel" class="pin-digit" maxlength="1" data-index="3">
+                      <!-- Mobile View: Deep Link Button -->
+                      <div id="paymentAppSection" class="hidden" style="margin-bottom: 20px;">
+                        <p class="pin-instruction">Complete payment in app</p>
                       </div>
 
                       <div class="pin-security-note">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
                           <path
-                            d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
                         </svg>
-                        Standard Bank Encryption
+                        Secure UPI Transaction by NCPI
                       </div>
                     </div>
 
                     <div class="payment-footer">
-                      <button class="checkout-btn" id="confirmPayBtn" onclick="processPayment()" disabled>
+                      <button class="checkout-btn" id="payNowBtn" onclick="initiateRealPayment()">
                         <span class="pay-btn-text">PAY NOW</span>
                         <span class="pay-btn-spinner hidden" id="paySpinner">
                           <span class="spin-animation">↻</span>
                         </span>
                       </button>
+                      <button class="text-btn" onclick="confirmManualPayment()"
+                        style="margin-top:10px; font-size:12px; opacity:0.8">I have completed payment</button>
                     </div>
                   </div>
-
-                  <!-- STEP 5: Success (Old Step 4) -->
-                  <div id="payStep5" class="payment-step hidden">
-                    <div class="success-body">
-                      <div class="success-animation">
-                        <div class="success-circle">
-                          <svg viewBox="0 0 24 24" width="48" height="48" fill="#fff">
-                            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
-                          </svg>
-                        </div>
-                      </div>
-
-                      <div class="success-title">Payment Successful!</div>
-                      <div class="success-amount" id="successAmount">₹0</div>
-
-                      <div class="success-details">
-                        <div class="success-detail-row">
-                          <span>Transaction ID</span>
-                          <span id="txnId">...</span>
-                        </div>
-                        <div class="success-detail-row">
-                          <span>Date & Time</span>
-                          <span id="txnDate">...</span>
-                        </div>
-                        <div class="success-detail-row">
-                          <span>Payment Method</span>
-                          <span id="txnMethod">...</span>
-                        </div>
-                        <div class="success-detail-row">
-                          <span>Status</span>
-                          <span class="txn-status-badge">Completed</span>
-                        </div>
-                      </div>
-
-                      <div class="success-message">
-                        <span>🎉</span>
-                        <div>
-                          <strong>Order Placed!</strong>
-                          <div style="font-size:12px; opacity:0.8">Your delicious items will be ready soon.</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="payment-footer">
-                      <button class="checkout-btn" onclick="closePaymentAndReset()">Done</button>
-                    </div>
-                  </div>
-
                 </div>
+
+                <!-- STEP 5: Success (Old Step 4) -->
+                <div id="payStep5" class="payment-step hidden">
+                  <div class="success-body">
+                    <div class="success-animation">
+                      <div class="success-circle">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="#fff">
+                          <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    <div class="success-title">Payment Successful!</div>
+                    <div class="success-amount" id="successAmount">₹0</div>
+
+                    <div class="success-details">
+                      <div class="success-detail-row">
+                        <span>Transaction ID</span>
+                        <span id="txnId">...</span>
+                      </div>
+                      <div class="success-detail-row">
+                        <span>Date & Time</span>
+                        <span id="txnDate">...</span>
+                      </div>
+                      <div class="success-detail-row">
+                        <span>Payment Method</span>
+                        <span id="txnMethod">...</span>
+                      </div>
+                      <div class="success-detail-row">
+                        <span>Status</span>
+                        <span class="txn-status-badge">Completed</span>
+                      </div>
+                    </div>
+
+                    <div class="success-message">
+                      <span>🎉</span>
+                      <div>
+                        <strong>Order Placed!</strong>
+                        <div style="font-size:12px; opacity:0.8">Your delicious items will be ready soon.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="payment-footer">
+                    <button class="checkout-btn" onclick="closePaymentAndReset()">Done</button>
+                  </div>
+                </div>
+
             </div>
+          </div>
 
-            <!-- Firebase SDKs (using CDN for cross-platform support) -->
-            <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-            <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-            <!-- Added Auth -->
-            <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-            <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+          <!-- Firebase SDKs (using CDN for cross-platform support) -->
+          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+          <!-- Added Auth -->
+          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+          <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
 
-            <script>
-              // Firebase Configuration
-              const firebaseConfig = {
-                apiKey: "AIzaSyDqq698rpuiQQCjrEAWp6rNSz0lhHkXjns",
-                authDomain: "jai-dav-dharthu-bakery.firebaseapp.com",
-                projectId: "jai-dav-dharthu-bakery",
-                storageBucket: "jai-dav-dharthu-bakery.firebasestorage.app",
-                messagingSenderId: "178566201855",
-                appId: "1:178566201855:web:288aaaa93cabae98b4e7ca"
-              };
+          <script>
+            // Firebase Configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyDqq698rpuiQQCjrEAWp6rNSz0lhHkXjns",
+              authDomain: "jai-dav-dharthu-bakery.firebaseapp.com",
+              projectId: "jai-dav-dharthu-bakery",
+              storageBucket: "jai-dav-dharthu-bakery.firebasestorage.app",
+              messagingSenderId: "178566201855",
+              appId: "1:178566201855:web:288aaaa93cabae98b4e7ca"
+            };
 
-              // Initialize Firebase
-              try {
-                firebase.initializeApp(firebaseConfig);
-                const auth = firebase.auth(); // Init Auth
-                const analytics = firebase.analytics();
-                const db = firebase.firestore();
+            // Initialize Firebase
+            try {
+              firebase.initializeApp(firebaseConfig);
+              const auth = firebase.auth(); // Init Auth
+              const analytics = firebase.analytics();
+              const db = firebase.firestore();
 
-                // Use device language for auth (SMS)
-                auth.useDeviceLanguage();
+              // Use device language for auth (SMS)
+              auth.useDeviceLanguage();
 
-                console.log('Firebase initialized successfully! 🔥');
-              } catch (e) {
-                console.error('Firebase initialization error:', e);
-              }
-            </script>
+              console.log('Firebase initialized successfully! 🔥');
+            } catch (e) {
+              console.error('Firebase initialization error:', e);
+            }
+          </script>
 
-            <script src="js/app.js"></script>
+          <script src="js/app.js"></script>
 </body>
 
 </html>

@@ -1205,5 +1205,108 @@ function checkOtpComplete() {
 
 // Init OTP listeners on load
 document.addEventListener('DOMContentLoaded', () => {
+
+    // ===== 💳 REAL PAYMENT LOGIC (UPI) =====
+    window.goToPayStep = function (step) {
+        document.querySelectorAll('.payment-step').forEach(s => s.classList.add('hidden'));
+        document.getElementById(`payStep${step}`).classList.remove('hidden');
+
+        if (step === 4) { // Real Payment Step (UPI)
+            const methodNames = { gpay: 'Google Pay', paytm: 'Paytm', phonepe: 'PhonePe', bhim: 'BHIM UPI' };
+            const methodEmojis = { gpay: '💙', paytm: '💎', phonepe: '💜', bhim: '💚' };
+
+            const method = selectedPaymentMethod || 'gpay';
+
+            const disp = document.getElementById('selectedMethodDisplay');
+            if (disp) {
+                disp.innerHTML = `
+                <span>${methodEmojis[method] || '💳'}</span>
+                Paying via ${methodNames[method] || 'UPI'}
+            `;
+            }
+            document.getElementById('pinAmount').textContent = `₹${paymentTotal}`;
+
+            setupRealPayment();
+        }
+    };
+
+    function setupRealPayment() {
+        // UPI Configuration
+        const upiId = '8988221818@upi';
+        const name = 'Jai Dav Dharthu Bakery';
+        const amount = paymentTotal;
+
+        // Construct UPI Deep Link
+        const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+
+        // Generate QR Code URL
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
+        const qrImg = document.getElementById('paymentQrCode');
+        if (qrImg) qrImg.src = qrUrl;
+
+        // Check Device Type (Mobile Check)
+        const isMobile = window.innerWidth <= 768;
+
+        const qrSection = document.getElementById('paymentQrSection');
+        const appSection = document.getElementById('paymentAppSection');
+        const payBtn = document.getElementById('payNowBtn');
+
+        if (isMobile) {
+            // Mobile: Show "Open App" button logic
+            if (qrSection) qrSection.classList.add('hidden');
+            if (appSection) appSection.classList.remove('hidden');
+
+            if (payBtn) {
+                payBtn.classList.remove('hidden');
+                payBtn.disabled = false;
+                payBtn.onclick = function () {
+                    window.location.href = upiLink;
+                    setTimeout(() => {
+                        showToast('Complete payment in app, then confirm here.');
+                    }, 2000);
+                };
+            }
+        } else {
+            // Desktop: Show QR Code
+            if (qrSection) qrSection.classList.remove('hidden');
+            if (appSection) appSection.classList.add('hidden');
+
+            // Hide primary button, rely on manual confirm link
+            if (payBtn) payBtn.classList.add('hidden');
+        }
+    }
+
+    window.confirmManualPayment = function () {
+        // Simulate Success Transition
+        const spinner = document.getElementById('paySpinner');
+        if (spinner) spinner.classList.remove('hidden');
+
+        setTimeout(() => {
+            // Generate Details
+            const txnId = 'TXN-' + Date.now().toString().slice(-8) + Math.round(Math.random() * 1000);
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) +
+                ' at ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+            document.getElementById('successAmount').textContent = `₹${paymentTotal}`;
+            document.getElementById('txnId').textContent = txnId;
+            document.getElementById('txnMethod').textContent = (selectedPaymentMethod || 'UPI').toUpperCase();
+            document.getElementById('txnDate').textContent = dateStr;
+
+            // Show Success Screen (Step 5 now)
+            document.querySelectorAll('.payment-step').forEach(s => s.classList.add('hidden'));
+            document.getElementById('payStep5').classList.remove('hidden');
+
+        }, 1500);
+    };
+
+    // Initiate from button
+    window.initiateRealPayment = function () {
+        // Just triggers the onclick logic again if needed, or handles desktop click
+        // For mobile, onclick is already set. For desktop, button is hidden.
+        // This is valid just in case element didn't hide.
+        setupRealPayment();
+    };
+
     initOtpInputs();
 });
