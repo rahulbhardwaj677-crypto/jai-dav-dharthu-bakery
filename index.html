@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jai Dav Dharthu Bakery — 100% Eggless | Freshly Baked with Love 🎂</title>
+  <meta name="description"
+    content="Jai Dav Dharthu Bakery — Premium 100% eggless cakes, pastries, breads & cookies. Custom birthday cakes, fresh daily. Near School Bazar, Sianj. Order now!">
+  <meta name="keywords" content="eggless bakery, birthday cake, custom cake, Sianj bakery, Jai Dav Dharthu">
+  <meta name="theme-color" content="#E84393">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Dancing+Script:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Celebration Canvas Background -->
+  <canvas id="celebration-canvas" class="celebration-bg"></canvas>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-cake">🎂</div>
+      <p class="preloader-text">Baking something special...</p>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="nav-brand">
+        <span class="brand-icon">🎂</span>
+        <div class="brand-text">
+          <span class="brand-name">Jai Dav Dharthu</span>
+          <span class="brand-tagline">100% Eggless Bakery</span>
+        </div>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#menu" class="nav-link">Menu</a></li>
+        <li><a href="#cake-builder" class="nav-link">Cake Builder</a></li>
+        <li><a href="#specials" class="nav-link">Specials</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#" class="nav-link pay-online-link" onclick="openPaymentFromNav(event)">💳 Pay Online</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-search" id="navSearch">
+          <button class="search-toggle" id="searchToggle" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+          <div class="search-box" id="searchBox">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search cakes, cookies, breads..."
+              autocomplete="off">
+            <button class="search-clear" id="searchClear">&times;</button>
+          </div>
+        </div>
+        <button class="cart-toggle" id="cartToggle" aria-label="Open Cart">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-bg-shapes">
+      <div class="hero-shape shape-1"></div>
+      <div class="hero-shape shape-2"></div>
+      <div class="hero-shape shape-3"></div>
+    </div>
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          100% Eggless · Fresh Daily
+        </div>
+        <h1 class="hero-title">
+          Freshly Baked<br>
+          <span class="hero-title-accent">with Love</span>
+          <span class="hero-emoji">🎂</span>
+        </h1>
+        <p class="hero-subtitle">
+          Celebrate every moment with our artisan eggless cakes, pastries, and breads.
+          Crafted with premium ingredients and served with a smile.
+        </p>
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary btn-lg">
+            <span>Browse Our Menu</span>
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="#cake-builder" class="btn btn-outline btn-lg">
+            <span>🎂 Build Your Cake</span>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number" data-target="5000">0</span>+
+            <span class="stat-label">Happy Customers</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="50">0</span>+
+            <span class="stat-label">Menu Items</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="8">0</span>+
+            <span class="stat-label">Years of Love</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=600&fit=crop"
+            alt="Beautiful Birthday Cake" class="hero-image" loading="eager">
+          <div class="hero-image-ring"></div>
+          <div class="hero-image-glow"></div>
+        </div>
+        <div class="floating-card fc-1">
+          <span>🍰</span> Fresh Cakes Daily
+        </div>
+        <div class="floating-card fc-2">
+          <span>⭐</span> 4.9 Rating
+        </div>
+        <div class="floating-card fc-3">
+          <span>🥚</span> 100% Eggless
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Our Menu</span>
+        <h2 class="section-title">Taste the <span class="text-accent">Difference</span></h2>
+        <p class="section-subtitle">Every item is 100% eggless, freshly baked, and made with love</p>
+      </div>
+      <!-- Visual Category Cards (rendered by JS with real images) -->
+      <div class="categories-showcase" id="categoriesShowcase"></div>
+      <!-- Filter Bar -->
+      <div class="menu-filter-bar" id="menuFilterBar">
+        <div class="filter-info">
+          <span class="filter-count" id="filterCount">28 items</span>
+          <span class="filter-category-name" id="filterCatName">All Items</span>
+        </div>
+        <div class="filter-actions">
+          <select class="filter-sort" id="filterSort">
+            <option value="default">Sort: Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A-Z</option>
+          </select>
+        </div>
+      </div>
+      <!-- Flavor Sub-sections (rendered by JS) -->
+      <div class="flavor-tabs" id="flavorTabs"></div>
+      <!-- Menu Grid -->
+      <div class="menu-grid" id="menuGrid"></div>
+    </div>
+  </section>
+
+  <!-- Cake Builder -->
+  <section class="builder-section" id="cake-builder">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Custom Cakes</span>
+        <h2 class="section-title">Build Your <span class="text-accent">Dream Cake</span></h2>
+        <p class="section-subtitle">Design the perfect cake for any celebration</p>
+      </div>
+      <div class="builder-layout">
+        <div class="builder-preview">
+          <div class="cake-stage" id="cakeStage">
+            <div class="cake-stage-label">Your Cake Preview</div>
+            <div class="cake-platform">
+              <div class="cake-visual" id="cakeVisual">
+                <div class="cake-topper" id="cakeTopper">🎂</div>
+              </div>
+            </div>
+          </div>
+          <div class="cake-message-display" id="cakeMessage">Your message here...</div>
+          <div class="cake-price-box">
+            <span class="price-label">Estimated Price</span>
+            <span class="price-amount" id="cakePrice">₹499</span>
+          </div>
+        </div>
+        <div class="builder-controls">
+          <div class="control-group">
+            <label class="control-label">Number of Tiers</label>
+            <div class="tier-options" id="tierOptions">
+              <button class="tier-btn active" data-tiers="1">1 Tier</button>
+              <button class="tier-btn" data-tiers="2">2 Tiers</button>
+              <button class="tier-btn" data-tiers="3">3 Tiers</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Flavor</label>
+            <div class="option-grid" id="flavorOptions">
+              <button class="option-btn active" data-flavor="vanilla" data-color="#FFF3CD">🍦 Vanilla</button>
+              <button class="option-btn" data-flavor="chocolate" data-color="#5C3317">🍫 Chocolate</button>
+              <button class="option-btn" data-flavor="strawberry" data-color="#FFB6C1">🍓 Strawberry</button>
+              <button class="option-btn" data-flavor="butterscotch" data-color="#DAA520">🍯 Butterscotch</button>
+              <button class="option-btn" data-flavor="red-velvet" data-color="#C41E3A">❤️ Red Velvet</button>
+              <button class="option-btn" data-flavor="blueberry" data-color="#4169E1">🫐 Blueberry</button>
+              <button class="option-btn" data-flavor="pineapple" data-color="#FFD700">🍍 Pineapple</button>
+              <button class="option-btn" data-flavor="black-forest" data-color="#2C1810">🌲 Black Forest</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Frosting</label>
+            <div class="option-grid" id="frostingOptions">
+              <button class="option-btn active" data-frosting="cream">🤍 Cream</button>
+              <button class="option-btn" data-frosting="fondant">🎀 Fondant</button>
+              <button class="option-btn" data-frosting="ganache">🍫 Ganache</button>
+              <button class="option-btn" data-frosting="buttercream">🧈 Buttercream</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Topper</label>
+            <div class="option-grid" id="topperOptions">
+              <button class="option-btn active" data-topper="🎂">🎂 Cake</button>
+              <button class="option-btn" data-topper="🎉">🎉 Party</button>
+              <button class="option-btn" data-topper="❤️">❤️ Heart</button>
+              <button class="option-btn" data-topper="⭐">⭐ Star</button>
+              <button class="option-btn" data-topper="🌸">🌸 Flower</button>
+              <button class="option-btn" data-topper="👑">👑 Crown</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Custom Message</label>
+            <input type="text" class="text-input" id="cakeMessageInput" placeholder="e.g. Happy Birthday Rahul!"
+              maxlength="40">
+          </div>
+          <button class="btn btn-primary btn-block" id="addCakeToCart">
+            🛒 Add Cake to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Today's Specials -->
+  <section class="specials-section" id="specials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">🔥 Today's Specials</span>
+        <h2 class="section-title">Don't <span class="text-accent">Miss Out</span></h2>
+        <p class="section-subtitle">Limited-time offers on our most loved items</p>
+      </div>
+      <div class="specials-grid" id="specialsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-layout">
+        <div class="about-content">
+          <span class="section-badge">Our Story</span>
+          <h2 class="section-title">Baking <span class="text-accent">Happiness</span> Since Day One</h2>
+          <p class="about-text">
+            At <strong>Jai Dav Dharthu Bakery</strong>, every bite tells a story of passion and dedication.
+            We believe that everyone deserves delicious baked goods, which is why all our products are
+            <strong>100% eggless</strong> — crafted with premium ingredients and baked fresh daily.
+          </p>
+          <p class="about-text">
+            From birthday celebrations to everyday treats, we've been the heart of the community near
+            School Bazar, Sianj, serving smiles one cake at a time. Our master bakers blend traditional
+            recipes with modern techniques to create unforgettable flavors.
+          </p>
+          <div class="about-features">
+            <div class="about-feature">
+              <span class="feature-icon">🥚</span>
+              <div>
+                <strong>100% Eggless</strong>
+                <p>Every single item</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="feature-icon">🌅</span>
+              <div>
+                <strong>Fresh Daily</strong>
+                <p>Baked every morning</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="feature-icon">💝</span>
+              <div>
+                <strong>Made with Love</strong>
+                <p>Family recipes</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="feature-icon">🏆</span>
+              <div>
+                <strong>Premium Quality</strong>
+                <p>Best ingredients</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-gallery">
+          <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=400&fit=crop"
+              alt="Chocolate Cake" class="gallery-img gi-1" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=400&h=300&fit=crop"
+              alt="Fresh Croissants" class="gallery-img gi-2" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop"
+              alt="Artisan Bread" class="gallery-img gi-3" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=400&fit=crop" alt="Cookies"
+              class="gallery-img gi-4" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Get in Touch</span>
+        <h2 class="section-title">Visit <span class="text-accent">Our Bakery</span></h2>
+        <p class="section-subtitle">We'd love to hear from you</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info">
+          <div class="info-card">
+            <span class="info-icon">📍</span>
+            <div>
+              <strong>Address</strong>
+              <p>Near School Bazar, Sianj</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">📞</span>
+            <div>
+              <strong>Phone</strong>
+              <p><a href="tel:8988221818">8988221818</a></p>
+            </div>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">🕐</span>
+            <div>
+              <strong>Hours</strong>
+              <p>7:00 AM – 9:00 PM, Daily</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">📧</span>
+            <div>
+              <strong>Email</strong>
+              <p>info@jaidavdharthu.com</p>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <input type="text" class="form-input" placeholder="Your Name" required>
+            <input type="tel" class="form-input" placeholder="Phone Number" required>
+          </div>
+          <input type="email" class="form-input" placeholder="Email Address">
+          <textarea class="form-input form-textarea" placeholder="Your Message..." rows="4" required></textarea>
+          <button type="submit" class="btn btn-primary btn-block">
+            Send Message ✉️
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="brand-icon-lg">🎂</span>
+          <h3>Jai Dav Dharthu Bakery</h3>
+          <p>100% Eggless · Freshly Baked with Love</p>
+        </div>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#menu">Menu</a>
+          <a href="#cake-builder">Cake Builder</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Jai Dav Dharthu Bakery. Made with ❤️ in Sianj</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>🛒 Your Cart</h3>
+      <button class="cart-close" id="cartClose">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty" id="cartEmpty">
+        <span class="empty-icon">🛒</span>
+        <p>Your cart is empty</p>
+        <a href="#menu" class="btn btn-outline btn-sm" id="cartBrowse">Browse Menu</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">
+        <span>Total</span>
+        <span class="total-amount" id="cartTotal">₹0</span>
+      </div>
+      <button class="btn btn-primary btn-block" id="checkoutBtn" onclick="openPaymentGateway()">
+        Proceed to Checkout 🎉
+      </button>
+    </div>
+  </aside>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/918988221818?text=Hi!%20I'd%20like%20to%20place%20an%20order%20from%20Jai%20Dav%20Dharthu%20Bakery"
+    class="whatsapp-float" target="_blank" rel="noopener" aria-label="Order via WhatsApp">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✅</span>
+    <span class="toast-text" id="toastText">Item added to cart!</span>
+  </div>
+
+  <!-- ===== PAYMENT GATEWAY MODAL ===== -->
+  <div class="payment-overlay" id="paymentOverlay"></div>
+  <div class="payment-modal" id="paymentModal">
+    <!-- Step 1: Order Summary -->
+    <div class="payment-step" id="payStep1">
+      <div class="payment-header">
+        <h3>🛒 Order Summary</h3>
+        <button class="payment-close" onclick="closePayment()">&times;</button>
+      </div>
+      <div class="payment-body">
+        <div class="order-items-list" id="orderItemsList"></div>
+        <div class="order-summary-totals">
+          <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">₹0</span></div>
+          <div class="summary-row"><span>Delivery Fee</span><span class="free-tag">FREE</span></div>
+          <div class="summary-row"><span>GST (5%)</span><span id="summaryGst">₹0</span></div>
+          <div class="summary-row total-row"><span>Total</span><span id="summaryTotal">₹0</span></div>
+        </div>
+        <div class="delivery-info-box">
+          <span class="delivery-icon">🚚</span>
+          <div>
+            <strong>Free Delivery</strong>
+            <p>On all orders above ₹299</p>
+          </div>
+        </div>
+      </div>
+      <div class="payment-footer">
+        <button class="btn btn-primary btn-block" onclick="goToPayStep(2)">Choose Payment Method →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Choose Payment Method -->
+    <div class="payment-step hidden" id="payStep2">
+      <div class="payment-header">
+        <button class="payment-back" onclick="goToPayStep(1)">← Back</button>
+        <h3>💳 Payment Method</h3>
+        <button class="payment-close" onclick="closePayment()">&times;</button>
+      </div>
+      <div class="payment-body">
+        <p class="payment-choose-label">Select your preferred UPI payment app</p>
+        <div class="payment-methods-grid">
+          <!-- Google Pay -->
+          <div class="payment-method-card" data-method="gpay" onclick="selectPaymentMethod('gpay')">
+            <div class="pm-logo-wrap gpay-bg">
+              <svg viewBox="0 0 24 24" width="32" height="32">
+                <path
+                  d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"
+                  fill="#4285F4" />
+              </svg>
+              <span class="pm-name">Google Pay</span>
+            </div>
+            <div class="pm-check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg></div>
+          </div>
+          <!-- Paytm -->
+          <div class="payment-method-card" data-method="paytm" onclick="selectPaymentMethod('paytm')">
+            <div class="pm-logo-wrap paytm-bg">
+              <svg viewBox="0 0 48 24" width="48" height="24">
+                <rect width="48" height="24" rx="4" fill="#00BAF2" />
+                <text x="24" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="#fff"
+                  font-family="Arial">Paytm</text>
+              </svg>
+              <span class="pm-name">Paytm</span>
+            </div>
+            <div class="pm-check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg></div>
+          </div>
+          <!-- PhonePe -->
+          <div class="payment-method-card" data-method="phonepe" onclick="selectPaymentMethod('phonepe')">
+            <div class="pm-logo-wrap phonepe-bg">
+              <svg viewBox="0 0 32 32" width="32" height="32">
+                <circle cx="16" cy="16" r="16" fill="#5F259F" />
+                <path d="M10 8h4l6 8-6 8h-4l6-8z" fill="#fff" />
+              </svg>
+              <span class="pm-name">PhonePe</span>
+            </div>
+            <div class="pm-check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg></div>
+          </div>
+          <!-- BHIM UPI -->
+          <div class="payment-method-card" data-method="bhim" onclick="selectPaymentMethod('bhim')">
+            <div class="pm-logo-wrap bhim-bg">
+              <svg viewBox="0 0 32 32" width="32" height="32">
+                <rect width="32" height="32" rx="6" fill="#00897B" />
+                <text x="16" y="13" text-anchor="middle" font-size="6" font-weight="800" fill="#fff"
+                  font-family="Arial">BHIM</text>
+                <text x="16" y="22" text-anchor="middle" font-size="5" font-weight="600" fill="#B2DFDB"
+                  font-family="Arial">UPI</text>
+              </svg>
+              <span class="pm-name">BHIM UPI</span>
+            </div>
+            <div class="pm-check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg></div>
+          </div>
+        </div>
+        <div class="secure-payment-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00B894" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0110 0v4" />
+          </svg>
+          <span>🔒 100% Secure & Encrypted Payment</span>
+        </div>
+      </div>
+      <div class="payment-footer">
+        <button class="btn btn-primary btn-block" id="proceedToPin" onclick="goToPayStep(3)" disabled>Enter Security PIN
+          →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Security PIN -->
+    <div class="payment-step hidden" id="payStep3">
+      <div class="payment-header">
+        <button class="payment-back" onclick="goToPayStep(2)">← Back</button>
+        <h3>🔐 Security PIN</h3>
+        <button class="payment-close" onclick="closePayment()">&times;</button>
+      </div>
+      <div class="payment-body pin-body">
+        <div class="selected-method-display" id="selectedMethodDisplay"></div>
+        <div class="pin-amount-display">
+          <span class="pin-amount-label">Amount to Pay</span>
+          <span class="pin-amount-value" id="pinAmount">₹0</span>
+        </div>
+        <p class="pin-instruction">Enter your 4-digit UPI PIN to authorize payment</p>
+        <div class="pin-input-container">
+          <input type="password" class="pin-digit" maxlength="1" data-index="0" inputmode="numeric" autocomplete="off">
+          <input type="password" class="pin-digit" maxlength="1" data-index="1" inputmode="numeric" autocomplete="off">
+          <input type="password" class="pin-digit" maxlength="1" data-index="2" inputmode="numeric" autocomplete="off">
+          <input type="password" class="pin-digit" maxlength="1" data-index="3" inputmode="numeric" autocomplete="off">
+        </div>
+        <div class="pin-security-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          Your PIN is encrypted and never stored
+        </div>
+      </div>
+      <div class="payment-footer">
+        <button class="btn btn-primary btn-block" id="confirmPayBtn" onclick="processPayment()" disabled>
+          <span class="pay-btn-text">Confirm & Pay</span>
+          <span class="pay-btn-spinner hidden" id="paySpinner">
+            <svg width="20" height="20" viewBox="0 0 24 24" class="spin-animation">
+              <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="3" fill="none" stroke-dasharray="30 60"
+                stroke-linecap="round" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div class="payment-step hidden" id="payStep4">
+      <div class="payment-header">
+        <h3>✅ Payment Successful</h3>
+        <button class="payment-close" onclick="closePayment()">&times;</button>
+      </div>
+      <div class="payment-body success-body">
+        <div class="success-animation">
+          <div class="success-circle">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+        </div>
+        <h2 class="success-title">Payment Received! 🎉</h2>
+        <p class="success-amount" id="successAmount">₹0</p>
+        <div class="success-details">
+          <div class="success-detail-row">
+            <span>Transaction ID</span>
+            <span id="txnId">TXN-000000</span>
+          </div>
+          <div class="success-detail-row">
+            <span>Payment Method</span>
+            <span id="txnMethod">UPI</span>
+          </div>
+          <div class="success-detail-row">
+            <span>Date & Time</span>
+            <span id="txnDate">--</span>
+          </div>
+          <div class="success-detail-row">
+            <span>Status</span>
+            <span class="txn-status-badge">✅ Success</span>
+          </div>
+        </div>
+        <div class="success-message">
+          <span>🎂</span>
+          <p>Your order is being prepared! You'll receive a WhatsApp confirmation shortly.</p>
+        </div>
+      </div>
+      <div class="payment-footer">
+        <button class="btn btn-primary btn-block" onclick="closePaymentAndReset()">Done — Continue Shopping 🛍️</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>
