@@ -2815,7 +2815,21 @@ ul {
         grid-template-columns: repeat(2, 1fr);
     }
 
+
     .search-box.open {
         width: 160px;
     }
+}
+
+/* Basic styling for contact links */
+.contact-link {
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 600;
+}
+
+.contact-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
 }
