@@ -16,6 +16,7 @@ function setupAuthRecaptcha() {
     }
 }
 
+// Override: Handle Send/Verify toggle
 window.handleAuthAction = function () {
     const isOtpVisible = !document.getElementById('authOtpSection').classList.contains('hidden');
     if (isOtpVisible) {
@@ -25,6 +26,7 @@ window.handleAuthAction = function () {
     }
 };
 
+// Override: Send OTP Logic
 window.sendOTP = function () {
     const phoneNumber = document.getElementById('phoneNumberInput').value;
     if (phoneNumber.length !== 10) {
@@ -34,7 +36,7 @@ window.sendOTP = function () {
     const fullPhoneNumber = '+91' + phoneNumber;
 
     // UI Loading
-    const btn = document.getElementById('authActionBtn');
+    const btn = document.getElementById('authActionBtn'); // Updated ID
     const spinner = document.getElementById('authSpinner');
     if (btn) btn.disabled = true;
     if (spinner) spinner.classList.remove('hidden');
@@ -80,6 +82,7 @@ window.sendOTP = function () {
         });
 };
 
+// Override: Verify OTP Logic
 window.verifyOTP = function () {
     const otpInputs = document.querySelectorAll('.otp-digit');
     let otp = '';
@@ -97,7 +100,7 @@ window.verifyOTP = function () {
 
     if (!authConfirmationResult) {
         showToast('Session expired. Please retry.');
-        window.location.reload();
+        window.location.reload(); // Simple error recovery
         return;
     }
 
@@ -113,21 +116,36 @@ window.verifyOTP = function () {
     });
 };
 
+// Override: Check OTP Completion
 window.checkOtpComplete = function () {
     const inputs = document.querySelectorAll('.otp-digit');
     const allFilled = [...inputs].every(i => i.value.length === 1);
-    const btn = document.getElementById('authActionBtn'); // New Button ID
+    const btn = document.getElementById('authActionBtn'); // Updated ID
     if (btn) btn.disabled = !allFilled;
 };
 
-// Re-init inputs listener because IDs are same class 'otp-digit' so app.js initOtpInputs works,
-// BUT we need to update the `checkOtpComplete` call inside them to use OUR new function.
-// Since `checkOtpComplete` is global and we overwrote it on window, `initOtpInputs` in app.js calls `checkOtpComplete()`
-// which should resolve to `window.checkOtpComplete` if called from global scope or if not shadowed.
-// app.js defines `function checkOtpComplete()`.
-// This creates a local or global function.
-// If it's global, `window.checkOtpComplete = ...` overwrites it.
-// If it's local inside a block... wait.
-// `app.js` defined `function checkOtpComplete() { ... }` at top level (lines 1000+).
-// So it IS global.
-// So `window.checkOtpComplete = ...` should work nicely.
+
+// Override: Select Payment Method (Fixing Button ID Issue)
+window.selectPaymentMethod = function (method) {
+    try {
+        if (typeof selectedPaymentMethod !== 'undefined') {
+            selectedPaymentMethod = method;
+        } else {
+            window.selectedPaymentMethod = method;
+        }
+    } catch (e) {
+        window.selectedPaymentMethod = method;
+    }
+
+    document.querySelectorAll('.payment-method-card').forEach(card => {
+        if (card.dataset.method === method) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+    });
+
+    // Enable the correct button for Step 2
+    const btn = document.getElementById('proceedToVerify');
+    if (btn) btn.disabled = false;
+};
