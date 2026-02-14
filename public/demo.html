@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Guide — Jai Dev Dharthu Bakery App</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0F0B1A;
+            color: #F1EEFF;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(139, 92, 246, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 30%, rgba(244, 114, 182, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .demo-header {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #A78BFA;
+            letter-spacing: .5px;
+            margin-bottom: 24px;
+        }
+
+        .demo-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .demo-subtitle {
+            font-size: 18px;
+            color: #B8AFCF;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .live-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .live-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #34D399;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .5
+            }
+        }
+
+        /* Demo Steps */
+        .demo-steps {
+            padding: 40px 0 80px;
+        }
+
+        .step {
+            background: rgba(26, 18, 48, 0.65);
+            border: 1px solid rgba(139, 92, 246, 0.12);
+            border-radius: 22px;
+            padding: 36px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3), 0 0 40px rgba(139, 92, 246, 0.1);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .step-desc {
+            color: #B8AFCF;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .step-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .feature-tag {
+            padding: 6px 14px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #A78BFA;
+        }
+
+        /* Tech Stack */
+        .tech-section {
+            padding: 0 0 80px;
+        }
+
+        .tech-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .tech-card {
+            background: rgba(26, 18, 48, 0.65);
+            border: 1px solid rgba(139, 92, 246, 0.12);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .tech-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .tech-name {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .tech-detail {
+            font-size: 12px;
+            color: #7B6F9B;
+        }
+
+        /* Footer */
+        .demo-footer {
+            text-align: center;
+            padding: 32px 0;
+            border-top: 1px solid rgba(139, 92, 246, 0.12);
+            font-size: 13px;
+            color: #7B6F9B;
+        }
+
+        @media(max-width:768px) {
+            .demo-header {
+                padding: 60px 0 40px;
+            }
+
+            .step {
+                padding: 24px;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="demo-header">
+            <div class="demo-badge">🎂 LIVE DEMO</div>
+            <h1 class="demo-title">Jai Dev Dharthu Bakery</h1>
+            <p class="demo-subtitle">A premium bakery web app with 100% eggless products, custom cake builder, UPI
+                payments, and QR scanner — deployed live on Firebase.</p>
+            <a href="https://jai-dav-dharthu-bakery.web.app" target="_blank" class="live-link">
+                <span class="live-dot"></span>
+                Open Live App →
+            </a>
+        </header>
+
+        <!-- Demo Steps -->
+        <section class="demo-steps">
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h2 class="step-title">🏠 Hero & Landing</h2>
+                </div>
+                <p class="step-desc">The app opens with a stunning animated preloader, then reveals the hero section
+                    with flowing aurora gradient title, floating bakery images with 3D parallax, real-time stats
+                    counter, and a smooth scroll indicator.</p>
+                <div class="step-features">
+                    <span class="feature-tag">Aurora Gradients</span>
+                    <span class="feature-tag">3D Parallax</span>
+                    <span class="feature-tag">Animated Stats</span>
+                    <span class="feature-tag">Floating Items</span>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h2 class="step-title">🍞 Browse the Menu</h2>
+                </div>
+                <p class="step-desc">Scroll down to see the sticky category ribbon. Click on any category — Bread, Cake,
+                    Pastry, Cookies, or Beverages — to filter the menu. Each card features real Unsplash photos,
+                    descriptions, allergen tags, and a glowing "+" button to add items to your cart.</p>
+                <div class="step-features">
+                    <span class="feature-tag">Category Filtering</span>
+                    <span class="feature-tag">Real Photos</span>
+                    <span class="feature-tag">Glassmorphism Cards</span>
+                    <span class="feature-tag">Hover Animations</span>
+                    <span class="feature-tag">Allergen Tags</span>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h2 class="step-title">🎂 Custom Cake Builder</h2>
+                </div>
+                <p class="step-desc">Design your dream cake! Choose from multiple tiers, each with shape, size, flavor,
+                    filling, and decoration options. Watch the visual cake preview update in real-time with stacking
+                    animation. Add a custom message and see live price calculation.</p>
+                <div class="step-features">
+                    <span class="feature-tag">Multi-Tier Builder</span>
+                    <span class="feature-tag">Live Preview</span>
+                    <span class="feature-tag">7 Flavors</span>
+                    <span class="feature-tag">Real-Time Pricing</span>
+                    <span class="feature-tag">Demo Video</span>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h2 class="step-title">🛒 Smart Cart</h2>
+                </div>
+                <p class="step-desc">Click the cart icon in the navbar to open the sliding cart sidebar. Manage
+                    quantities, remove items, and see real-time totals. Your cart persists across sessions using
+                    localStorage.</p>
+                <div class="step-features">
+                    <span class="feature-tag">Sliding Sidebar</span>
+                    <span class="feature-tag">Quantity Controls</span>
+                    <span class="feature-tag">Local Storage</span>
+                    <span class="feature-tag">Auto Totals</span>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <h2 class="step-title">💳 UPI Payment</h2>
+                </div>
+                <p class="step-desc">Click "Proceed to Checkout" to open the premium UPI payment modal. Choose from
+                    Google Pay, PhonePe, Paytm, or BHIM UPI with proper SVG brand icons. View the QR code with gradient
+                    border, copy the UPI ID, or enter your own UPI ID to pay.</p>
+                <div class="step-features">
+                    <span class="feature-tag">Google Pay</span>
+                    <span class="feature-tag">PhonePe</span>
+                    <span class="feature-tag">Paytm</span>
+                    <span class="feature-tag">BHIM UPI</span>
+                    <span class="feature-tag">QR Code</span>
+                    <span class="feature-tag">Animated Progress</span>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <h2 class="step-title">📷 QR Scanner</h2>
+                </div>
+                <p class="step-desc">In the payment modal, click "Open Camera Scanner" to launch the full-screen QR
+                    scanner. It opens your device camera with animated scan line, corner brackets, and status indicator.
+                    Use Flash, Switch camera, or Demo mode to simulate a successful scan.</p>
+                <div class="step-features">
+                    <span class="feature-tag">Live Camera</span>
+                    <span class="feature-tag">Scan Animation</span>
+                    <span class="feature-tag">Flash Toggle</span>
+                    <span class="feature-tag">Camera Switch</span>
+                    <span class="feature-tag">Demo Mode</span>
+                </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">7</div>
+                    <h2 class="step-title">📋 Contact & About</h2>
+                </div>
+                <p class="step-desc">Scroll to explore the About section with bakery values, image grid with hover
+                    effects, customer testimonials with star ratings, and a contact form with real bakery details —
+                    address at Near School Bazar, Sianj and phone number 8988221818.</p>
+                <div class="step-features">
+                    <span class="feature-tag">Image Grid</span>
+                    <span class="feature-tag">Testimonials</span>
+                    <span class="feature-tag">Contact Form</span>
+                    <span class="feature-tag">100% Eggless</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="tech-section">
+            <h2 class="tech-title">⚡ Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon">🔥</div>
+                    <div class="tech-name">Firebase Hosting</div>
+                    <div class="tech-detail">HTTPS · CDN · SSL</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🎨</div>
+                    <div class="tech-name">CSS3</div>
+                    <div class="tech-detail">Glassmorphism · Gradients</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">⚡</div>
+                    <div class="tech-name">Vanilla JS</div>
+                    <div class="tech-detail">No frameworks needed</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📷</div>
+                    <div class="tech-name">WebRTC Camera</div>
+                    <div class="tech-detail">QR Scanner</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">💳</div>
+                    <div class="tech-name">UPI Payments</div>
+                    <div class="tech-detail">GPay · PhonePe · Paytm</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🖼️</div>
+                    <div class="tech-name">Unsplash Images</div>
+                    <div class="tech-detail">Real HD Photos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="demo-footer">
+            <p>Built with 💜 for Jai Dev Dharthu Bakery · Firebase Deployed · © 2026</p>
+        </footer>
+    </div>
+</body>
+
+</html>

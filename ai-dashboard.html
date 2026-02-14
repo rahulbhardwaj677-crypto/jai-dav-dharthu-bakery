@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Agentic Skills | Jai Dev Dharthu Bakery</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #d4a373;
+            --accent-glow: rgba(212, 163, 115, 0.3);
+            --surface: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-dim: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .background-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: move 20s infinite alternate;
+        }
+
+        .blob-1 {
+            top: -200px;
+            right: -100px;
+            animation-duration: 25s;
+        }
+
+        .blob-2 {
+            bottom: -200px;
+            left: -100px;
+            animation-duration: 30s;
+            background: radial-gradient(circle, rgba(163, 212, 115, 0.1) 0%, transparent 70%);
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(100px, 100px);
+            }
+        }
+
+        header {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 3rem 1.5rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .results-container {
+            margin-top: 4rem;
+            display: none;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .thinking-box {
+            background: #111;
+            border-radius: 16px;
+            padding: 2rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .thinking-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .thinking-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .final-answer {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .final-answer h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .final-answer-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .loader {
+            display: none;
+            justify-content: center;
+            margin: 3rem 0;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+                opacity: 0.5;
+            }
+        }
+
+        .btn-reset {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 2rem;
+            align-self: flex-center;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+
+        .custom-prompt-container {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+            background: var(--surface);
+            padding: 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .custom-prompt-container input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            outline: none;
+        }
+
+        .custom-prompt-container input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .custom-prompt-container button {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .custom-prompt-container button:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Live Voice Interface */
+        .live-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .waveform {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100px;
+            margin-bottom: 2rem;
+        }
+
+        .bar {
+            width: 6px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 10px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .bar:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .bar:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .bar:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                height: 20px;
+            }
+
+            50% {
+                height: 80px;
+            }
+        }
+
+        .live-status {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .live-subtext {
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+        }
+
+        .close-live {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            cursor: pointer;
+            padding: 1rem;
+        }
+
+        /* Inventory Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: #151515;
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid var(--border);
+        }
+
+        .inv-item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .inv-item-row input {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .btn-save {
+            background: var(--accent);
+            color: black;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header>
+        <div class="logo">Jai Dev Dharthu AI</div>
+        <a href="https://jai-dav-dharthu-bakery.web.app" target="_blank"
+            style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem; border: 1px solid var(--accent); padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.2s;">
+            Visit Live Site ↗
+        </a>
+    </header>
+
+    <main>
+        <div id="home-view">
+            <div class="hero">
+                <h1>Thinking Mode</h1>
+                <p>Experience the latest Gemini 3 Pro agentic skills. Ask complex questions that require multi-step
+                    reasoning and deep analysis.</p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="card" onclick="runTask('bakery')">
+                    <img src="https://img.icons8.com/fluency/96/cake.png" alt="Bakery">
+                    <h3>Bakery Planner</h3>
+                    <p>Calculate ingredient quantities for bulk orders, factoring in wastage and professional standards.
+                    </p>
+                </div>
+                <div class="card" onclick="runTask('construction')">
+                    <img src="https://img.icons8.com/fluency/96/building-construction.png" alt="Construction">
+                    <h3>Steel Estimator</h3>
+                    <p>Accurate structural calculations for construction projects using high-level reasoning.</p>
+                </div>
+                <div class="card" onclick="runVisionAudit()">
+                    <img src="https://img.icons8.com/fluency/96/camera.png" alt="Vision">
+                    <h3>AI Visual Audit</h3>
+                    <p>Gemini will "see" your current dashboard and provide pixel-perfect UI/UX optimization tips.</p>
+                </div>
+                <div class="card" onclick="openLiveMode()">
+                    <img src="https://img.icons8.com/fluency/96/microphone.png" alt="Voice">
+                    <h3>Live Voice API</h3>
+                    <p>Full-duplex, real-time voice interaction for hands-free bakery management.</p>
+                </div>
+                <div class="card" onclick="runTask('inventory')">
+                    <img src="https://img.icons8.com/fluency/96/checkout.png" alt="Inventory">
+                    <h3>Inventory Optimizer</h3>
+                    <p>Predict stock requirements for high-demand periods using Gemini's deep reasoning.</p>
+                </div>
+                <div class="card" onclick="runTask('production')">
+                    <img src="https://img.icons8.com/fluency/96/sand-timer.png" alt="Timeline">
+                    <h3>Production Scheduler</h3>
+                    <p>Optimize your baking order based on cooling times and structural requirements.</p>
+                </div>
+                <div class="card" onclick="runTask('business_insights')">
+                    <img src="https://img.icons8.com/fluency/96/combo-chart.png" alt="Analytics">
+                    <h3>Business Insights</h3>
+                    <p>Gemini analyzes real-time customer behavior and contact inquires to suggest growth strategies.
+                    </p>
+                </div>
+
+                <div class="card-wide" style="grid-column: span 2;">
+                    <div class="custom-prompt-container">
+                        <input type="text" id="custom-prompt-input"
+                            placeholder="Or ask me anything else... (e.g. 'How to bake a 3-tier cake?')">
+                        <button onclick="runTask('custom')">Ask Gemini</button>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn-reset" onclick="openInventoryModal()"
+                            style="border-color: var(--accent); color: var(--accent);">Edit Physical Stock</button>
+                    </div>
+                </div>
+
+                <div id="loader" class="loader">
+                    <div class="dots">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+
+                <div id="results" class="results-container">
+                    <div class="thinking-box">
+                        <div class="thinking-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                            </svg>
+                            Thought Process
+                        </div>
+                        <div id="thought-content" class="thinking-content"></div>
+                    </div>
+
+                    <div class="final-answer">
+                        <h2 id="result-title">Analysis Result</h2>
+                        <div id="answer-content" class="final-answer-text"></div>
+                    </div>
+
+                    <button class="btn-reset" onclick="reset()">Start New Task</button>
+                </div>
+    </main>
+
+    <!-- Live Voice Overlay -->
+    <div id="live-overlay" class="live-overlay">
+        <div class="close-live" onclick="closeLiveMode()">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </div>
+        <div class="waveform">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="live-status">Listening...</div>
+        <div class="live-subtext">Speak naturally. Gemini is ready.</div>
+    </div>
+
+    <!-- Inventory Modal -->
+    <div id="inv-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Manage Inventory</h2>
+                <button onclick="closeInventoryModal()"
+                    style="background:none; border:none; color:white; cursor:pointer;">✕</button>
+            </div>
+            <div id="inventory-list">
+                <!-- Rows injected here -->
+            </div>
+            <button class="btn-save" onclick="saveInventory()">Save Stock Levels</button>
+        </div>
+    </div>
+
+    <script>
+        let currentInventory = [];
+
+        async function openInventoryModal() {
+            document.getElementById('inv-modal').style.display = 'flex';
+            try {
+                const response = await fetch('http://localhost:5000/api/inventory');
+                const data = await response.json();
+                currentInventory = data.stock;
+                renderInventory();
+            } catch (err) {
+                alert('Failed to load inventory.');
+            }
+        }
+
+        function closeInventoryModal() {
+            document.getElementById('inv-modal').style.display = 'none';
+        }
+
+        function renderInventory() {
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = `
+                <div class="inv-item-row" style="font-weight:600; color:var(--text-dim); font-size:0.8rem; text-transform:uppercase;">
+                    <div>Item</div>
+                    <div>Qty</div>
+                    <div>Unit</div>
+                </div>
+            `;
+            currentInventory.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'inv-item-row';
+                row.innerHTML = `
+                    <div>${item.item}</div>
+                    <input type="number" value="${item.quantity}" onchange="updateLocalQty(${index}, this.value)">
+                    <div style="color:var(--text-dim)">${item.unit}</div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function updateLocalQty(index, val) {
+            currentInventory[index].quantity = parseFloat(val);
+        }
+
+        async function saveInventory() {
+            try {
+                const response = await fetch('http://localhost:5000/api/inventory', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stock: currentInventory, last_updated: new Date().toISOString() })
+                });
+                if (response.ok) {
+                    alert('Inventory Updated! Gemini will now use these new levels.');
+                    closeInventoryModal();
+                }
+            } catch (err) {
+                alert('Failed to save inventory.');
+            }
+        }
+
+        async function runTask(mode) {
+            let customPrompt = "";
+            if (mode === 'custom') {
+                customPrompt = document.getElementById('custom-prompt-input').value;
+                if (!customPrompt) return;
+            }
+
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('loader').style.display = 'flex';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/calculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode, custom_prompt: customPrompt })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    reset();
+                    return;
+                }
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('results').style.display = 'flex';
+
+                if (mode === 'bakery') document.getElementById('result-title').innerText = 'Bakery Planning Matrix';
+                else if (mode === 'construction') document.getElementById('result-title').innerText = 'Structural Steel Report';
+                else if (mode === 'inventory') document.getElementById('result-title').innerText = 'Smart Inventory Prediction';
+                else if (mode === 'production') document.getElementById('result-title').innerText = 'Tiered Production Schedule';
+                else if (mode === 'business_insights') document.getElementById('result-title').innerText = 'Gemini Business Consultant Insights';
+                else document.getElementById('result-title').innerText = 'AI Analysis for "' + customPrompt + '"';
+
+                // Animate Thinking Content
+                typeText(document.getElementById('thought-content'), data.thought, 20);
+                // Animate Answer Content (wait a bit)
+                setTimeout(() => {
+                    document.getElementById('answer-content').innerHTML = data.answer.replace(/\n/g, '<br>');
+                }, 1000);
+
+            } catch (err) {
+                console.error(err);
+                alert('Connection to local AI server failed. Ensure scripts/server.py is running.');
+                reset();
+            }
+        }
+
+        async function runVisionAudit() {
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('loader').style.display = 'flex';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                // Give user a moment to focus the window
+                const response = await fetch('http://localhost:5000/api/vision-audit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    reset();
+                    return;
+                }
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('results').style.display = 'flex';
+
+                document.getElementById('result-title').innerText = 'AI Computer Vision Audit';
+
+                typeText(document.getElementById('thought-content'), data.thought, 20);
+                setTimeout(() => {
+                    document.getElementById('answer-content').innerHTML = data.answer.replace(/\n/g, '<br>');
+                }, 1000);
+
+            } catch (err) {
+                alert('Connection failed. Ensure server.py is running.');
+                reset();
+            }
+        }
+
+        function openLiveMode() {
+            document.getElementById('live-overlay').style.display = 'flex';
+            // In a real implementation, we would initialize the WebSocket connection here
+            // For the demo, we show the readiness UI
+        }
+
+        function closeLiveMode() {
+            document.getElementById('live-overlay').style.display = 'none';
+        }
+
+        function typeText(element, text, speed) {
+            element.innerHTML = '';
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        function reset() {
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+{
+    "last_updated": "2026-02-14",
+    "stock": [
+        {
+            "item": "Flour",
+            "quantity": 120,
+            "unit": "kg",
+            "reorder_level": 50
+        },
+        {
+            "item": "Sugar",
+            "quantity": 45,
+            "unit": "kg",
+            "reorder_level": 30
+        },
+        {
+            "item": "Butter",
+            "quantity": 15,
+            "unit": "kg",
+            "reorder_level": 20
+        },
+        {
+            "item": "Whipping Cream",
+            "quantity": 8,
+            "unit": "liters",
+            "reorder_level": 15
+        },
+        {
+            "item": "Chocolate Shavings",
+            "quantity": 5,
+            "unit": "kg",
+            "reorder_level": 5
+        },
+        {
+            "item": "Eggs",
+            "quantity": 300,
+            "unit": "pcs",
+            "reorder_level": 100
+        }
+    ]
+}
