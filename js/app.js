@@ -1074,4 +1074,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initPinInputs();
     // Close payment on overlay click
     document.getElementById('paymentOverlay')?.addEventListener('click', closePayment);
+
+    // Call Button Feedback
+    document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+        link.addEventListener('click', () => {
+            showToast('Calling Jai Dav Dharthu Bakery... 📞');
+        });
+    });
 });
